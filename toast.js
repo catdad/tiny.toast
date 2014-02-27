@@ -43,6 +43,6 @@
         error: toaster('t-red'),
         info: toaster('t-blue'),
         success: toaster('t-green'),
-        warning: toaster('t-yellow')
+        warning: toaster('t-orange')
     };
 })();
