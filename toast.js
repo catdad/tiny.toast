@@ -31,14 +31,22 @@
             div.className = type + ' t-toast';
             div.innerHTML = msg;
             toastDOM.appendChild(div);
-            //add remove options
-            var autoRemove = setTimeout(function () { toastDOM.removeChild(div); }, (+timeout || +toastr.timeout || 5000));
+            //add remove options (unless indefinite requested)
+			var autoRemove;
+            (timeout !== -1) && (autoRemove = setTimeout(function () { toastDOM.removeChild(div); }, (+timeout || +toastr.timeout || 5000)));
             div.onclick = function () { clearTimeout(autoRemove); toastDOM.removeChild(div); }
+			//return a remove reference
+			return div.onclick;
         }
     }
+	
+	function clearAll(){
+		while(toastDOM.firstChild) toastDOM.removeChild(toastDOM.firstChild);
+	}
 
     var toastr = window.toastr = {
         timeout: 4000,
+		clear: clearAll,
         log: toaster('t-gray'),
         error: toaster('t-red'),
         info: toaster('t-blue'),

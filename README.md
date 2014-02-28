@@ -4,9 +4,9 @@ This is the first of my micro-libraries. It will show tiny messages at the botto
 
 ## Usage
 
-Include the script in your web page:
+Include the script in your web page (it's hosted online!):
 
-	<script src="toast.js"></script>
+	<script src="//catdad.github.io/tiny.cdn/lib/toast/latest/toast.min.js"></script>
 
 Then, start sending tiny toast notifications:
 
@@ -23,6 +23,21 @@ It's that easy. They will disappear after a default about of time. To customize 
 Or you can change the default timeout.
 
 	toastr.timeout = 5000;
+	
+To create an indefinite notification, use `-1` as the timeout:
+
+	toastr.info('Indefinite message', -1);
+	
+To clear any notification, you can simply click on the notification. However, creating a toast also returns a function to clear it, as such:
+
+	var clearFn = toastr.info('Indefinite message', -1);
+	
+	//use this to clear it
+	clearFn();
+	
+To clear all notifications:
+
+	toastr.clear();
 
 ## About Tiny tools
 
