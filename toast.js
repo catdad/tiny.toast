@@ -1,4 +1,4 @@
-(function () {
+!function () {
     //create CSS
     var head = document.head || document.getElementsByTagName('head')[0];
     var style = document.createElement('style');
@@ -42,10 +42,10 @@
             //add remove options (unless indefinite requested)
 			var autoRemove;
             (timeout !== -1) && (autoRemove = setTimeout(function () { toastDOM.removeChild(div); }, (+timeout || +toastr.timeout || 5000)));
-            div.onclick = function () { clearTimeout(autoRemove); toastDOM.removeChild(div); }
+            div.onclick = function () { clearTimeout(autoRemove); toastDOM.removeChild(div); };
 			//return a remove reference
 			return div.onclick;
-        }
+        };
     }
 	
 	function clearAll(){
@@ -61,4 +61,4 @@
         success: toaster('t-green'),
         warning: toaster('t-orange')
     };
-})();
+}();
