@@ -20,8 +20,16 @@
     //generate DOM
     var toastDOM = document.createElement('div');
     toastDOM.className = 't-wrap';
-    //insert toast DOM into body
-    document.body.appendChild(toastDOM);
+    
+    // https://gist.github.com/catdad/9399313
+    var ready = function(){
+		//insert toast DOM into body -- when ready
+        document.body.appendChild(toastDOM);
+	};
+	var readyCheck = function(){ (document.readyState === 'complete') && ready(); };
+	//check for when the document is ready
+	if (document.addEventListener) document.addEventListener('readystatechange', readyCheck, false);
+	else document.attachEvent('onreadystatechange', readyCheck);
 
     function toaster(type) {
         //generate a toast function
