@@ -1,3 +1,5 @@
+/* jshint browser: true, -W030 */
+
 !function () {
     //create CSS
     var head = document.head || document.getElementsByTagName('head')[0];
@@ -32,18 +34,52 @@
 	else document.attachEvent('onreadystatechange', readyCheck);
 
     function toaster(type) {
+        //keep track of toast DOMs
+        var Instance = function(msg){
+            this.count = 0;
+            this.dom = document.createElement('div');
+            this.textNode = undefined;
+            this.autoRemove = undefined;
+            this.remove = function(){
+                toastDOM.removeChild(this.dom);
+                delete tracker[msg];
+            };
+            
+            //add classname
+            this.dom.className = type + ' t-toast';
+            
+            //automatically insert into the DOM
+            toastDOM.appendChild(this.dom);
+            
+            //create the instance tracker
+            !!toastr.group && (tracker[msg] = this);
+        };
+        
+        //an array to track multiple messages
+        var tracker = [];
+        
         //generate a toast function
         return function toast(msg, timeout) {
             //create toast element
-            var div = document.createElement('div');
-            div.className = type + ' t-toast';
-            div.innerHTML = msg;
-            toastDOM.appendChild(div);
+            var prev = (!!toastr.group && tracker[msg]) ? tracker[msg] : new Instance(msg),
+                div = prev.dom,
+                text = (prev && ++prev.count > 1) ? msg + ' (x' + prev.count + ')' : msg,
+                textNode = document.createTextNode(text);
+            
+            div.firstChild ? div.replaceChild(textNode, div.firstChild) : div.appendChild(textNode);
+            
             //add remove options (unless indefinite requested)
-			var autoRemove;
-            (timeout !== -1) && (autoRemove = setTimeout(function () { toastDOM.removeChild(div); }, (+timeout || +toastr.timeout || 5000)));
-            div.onclick = function () { clearTimeout(autoRemove); toastDOM.removeChild(div); };
-			//return a remove reference
+			(timeout !== -1) && (clearTimeout(prev.autoRemove), prev.autoRemove = setTimeout(function () { 
+                prev.remove();
+            }, (+timeout || +toastr.timeout || 5000)));
+            
+            //create function to remove on click
+            div.onclick = function () { 
+                clearTimeout(prev.autoRemove);
+                prev.remove();
+            };
+			
+            //return a remove reference
 			return div.onclick;
         };
     }
@@ -54,6 +90,7 @@
 
     var toastr = window.toastr = {
         timeout: 4000,
+        group: false,
 		clear: clearAll,
         log: toaster('t-gray'),
         error: toaster('t-red'),
