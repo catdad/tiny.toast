@@ -33,17 +33,27 @@
 	if (document.addEventListener) document.addEventListener('readystatechange', readyCheck, false);
 	else document.attachEvent('onreadystatechange', readyCheck);
 
+    function isInPage(node) {
+        return (node === document.body) ? false : document.body.contains(node);
+    }
+    
     function toaster(type) {
         //keep track of toast DOMs
         var Instance = function(msg){
+            var that = this;
+            
             this.count = 0;
             this.dom = document.createElement('div');
             this.textNode = undefined;
             this.autoRemove = undefined;
             this.remove = function(){
-                toastDOM.removeChild(this.dom);
+                clearTimeout(that.autoRemove);
+                isInPage(that.dom) && toastDOM.removeChild(that.dom);
                 delete tracker[msg];
             };
+            
+            //add remove function directly to dom element
+            this.dom.removeToast = this.remove;
             
             //add classname
             this.dom.className = type + ' t-toast';
@@ -75,7 +85,7 @@
             
             //create function to remove on click
             div.onclick = function () { 
-                clearTimeout(prev.autoRemove);
+                //clearTimeout(prev.autoRemove);
                 prev.remove();
             };
 			
@@ -85,7 +95,10 @@
     }
 	
 	function clearAll(){
-		while(toastDOM.firstChild) toastDOM.removeChild(toastDOM.firstChild);
+		while(toastDOM.firstChild) 
+            (toastDOM.firstChild.removeToast) ? 
+                toastDOM.firstChild.removeToast() : 
+                toastDOM.removeChild(toastDOM.firstChild);
 	}
 
     var toastr = window.toastr = {
