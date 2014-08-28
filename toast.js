@@ -1,6 +1,6 @@
 /* jshint browser: true, -W030 */
 
-!function () {
+!function (window, document) {
     //create CSS
     var head = document.head || document.getElementsByTagName('head')[0];
     var style = document.createElement('style');
@@ -85,7 +85,6 @@
             
             //create function to remove on click
             div.onclick = function () { 
-                //clearTimeout(prev.autoRemove);
                 prev.remove();
             };
 			
@@ -111,4 +110,4 @@
         success: toaster('t-green'),
         warning: toaster('t-orange')
     };
-}();
+}(window, document);
