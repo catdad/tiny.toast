@@ -5,14 +5,14 @@
     var head = document.head || document.getElementsByTagName('head')[0];
     var style = document.createElement('style');
     style.type = 'text/css';
-    var css = ".t-wrap{ position: fixed; bottom: 0; width: 100%; text-align: center; }";
-    css += ".t-wrap .t-toast{ width: 15em; margin: .5em auto; padding: .3em; border: 2px solid; border-radius: 2em; color: #eee; box-shadow: 0 0 30px -6px black; }";
-    css += ".t-toast.t-gray{ background: #777; background: rgba(119,119,119,.9); border-color: #333; }";
-    css += ".t-toast.t-red{ background: #D85955; background: rgba(216,89,85,.9); border-color: #562422; }";
-    css += ".t-toast.t-blue{ background: #4374AD; background: rgba(67,116,173,.9); border-color: #16273A; }";
-    css += ".t-toast.t-green{ background: #75AD44; background: rgba(117,173,68,.9); border-color: #2F451B; }";
-    css += ".t-toast.t-orange{ background: #D89B55; background: rgba(216,133,73,.9); border-color: #624E02; }";
-    css += "@media screen and (max-width: 16em){ .t-wrap .t-toast{ width: 90%; } }";
+    var css = [".t-wrap{position:fixed;bottom:0;width:100%;text-align:center;}",
+               ".t-wrap .t-toast{width:15em;margin:.5em auto;padding:.3em;border:2px solid;border-radius:2em;color:#eee;box-shadow:0 0 30px -6px black;}",
+               ".t-toast.t-gray{background:#777;background:rgba(119,119,119,.9);border-color:#333;}",
+               ".t-toast.t-red{background:#D85955;background:rgba(216,89,85,.9);border-color:#562422;}",
+               ".t-toast.t-blue{background:#4374AD;background:rgba(67,116,173,.9);border-color:#16273A;}",
+               ".t-toast.t-green{background:#75AD44;background:rgba(117,173,68,.9);border-color:#2F451B;}",
+               ".t-toast.t-orange{background:#D89B55;background:rgba(216,133,73,.9);border-color:#624E02;}",
+               "@media screen and (max-width: 16em){.t-wrap .t-toast{width: 90%;}}"].join(' ');
 
     //insert CSS into the stylesheet and head
     (style.styleSheet) ? style.styleSheet.cssText = css : style.appendChild(document.createTextNode(css));
