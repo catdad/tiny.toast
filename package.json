@@ -1,0 +1,24 @@
+{
+  "name": "tiny.toast",
+  "version": "0.0.0",
+  "description": "This is the first of my micro-libraries. It will show tiny messages at the bottom of a web page. That is it.",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/catdad/tiny.toast.git"
+  },
+  "author": "Kiril Vatev <vatev.1@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/catdad/tiny.toast/issues"
+  },
+  "homepage": "https://github.com/catdad/tiny.toast",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "uglify-js": "^2.4.15",
+    "clean-css": "^2.2.16"
+  }
+}
