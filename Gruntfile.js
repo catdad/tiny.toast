@@ -34,6 +34,9 @@ module.exports = function(grunt) {
         // put the CSS code inside the JS file
         jsSource = jsSource.replace(/{{csscode}}/g, cssMini);
         
+        // write the full file for dev/debug purposes
+        fs.writeFileSync('toast.full.js', data.banner + jsSource);
+        
         // minify the JS code
         var jsMini = UglifyJS.minify(jsSource, { fromString: true }).code;
         
