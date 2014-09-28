@@ -1,26 +1,45 @@
 /* jshint node: true */
 var fs = require('fs');
 
+var UglifyJS = require('uglify-js');
+var CleanCSS = require('clean-css');
+
 module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        uglify: {
-            options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            build: {
-                src: 'toast.js',
-                dest: 'toast.min.js'
+        build: {
+            main: {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+                css: "toast.css",
+                js: "toast.js"
             }
         }
     });
 
-    // Load the plugin that provides the "uglify" task.
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
     // Default task(s).
-    grunt.registerTask('default', ['uglify']);
-
+    grunt.registerTask('default', ['build']);
+    
+    grunt.registerMultiTask('build', function(arg1, arg2){
+        var done = this.async(),
+            data = this.data;
+        
+        var jsSource = fs.readFileSync(data.js).toString();
+        var cssSource = fs.readFileSync(data.css).toString();
+        
+        // get minified CSS code
+        var cssMini = new CleanCSS().minify(cssSource);
+        
+        // put the CSS code inside the JS file
+        jsSource = jsSource.replace(/{{csscode}}/g, cssMini);
+        
+        // minify the JS code
+        var jsMini = UglifyJS.minify(jsSource, { fromString: true }).code;
+        
+        // write the JS code to the final file
+        fs.writeFileSync('toast.min.js', data.banner + jsMini);
+        
+        done();
+    });
 };
