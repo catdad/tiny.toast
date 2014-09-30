@@ -37,14 +37,20 @@
         return (node === document.body) ? false : document.body.contains(node);
     }
     
+    // helper - very simple forEach
     function arrForEach(arr, fn){
         for (var i = 0, l = arr.length; i < l; i++) {
             fn(arr[i], i, arr);
         }
     }
     
+    // helper - animate DOM element exit
+    // remove immediately if animations are not available
     function remove(node) {
         function removeDom(){
+            // check if the node is still in the DOM
+            if (!isInPage(node)) { return; }
+        
             node.parentElement.removeChild(node);
         }
             
@@ -84,6 +90,7 @@
         return opts;
     }
     
+    // toast generator function
     function toaster(type) {
         //keep track of toast DOMs
         var Instance = function(msg){
@@ -97,8 +104,7 @@
                 clearTimeout(that.autoRemove);
                 delete tracker[msg];
                 
-//                isInPage(that.dom) && toastDOM.removeChild(that.dom);
-                isInPage(that.dom) && remove(that.dom);
+                remove(that.dom);
             };
             
             //add remove function directly to dom element
@@ -147,7 +153,7 @@
         arrForEach(children, function(el){
             (el.removeToast) ? 
                 el.removeToast() : 
-                remove(el.removeToast);
+                remove(el);
         });
 	}
 
