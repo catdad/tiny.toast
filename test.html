@@ -9,6 +9,8 @@
 			margin: 0;
 			background: #e5e5e5;
 			font-size: 1em;
+            font-family: sans-serif;
+            color: #555;
 		}
         
         button {
@@ -27,28 +29,73 @@
         button:hover{
             background: #e0e0e0;
         }
+        
+        .section {
+            border: 1px solid gray;
+            box-sizing: border-box;
+            margin: 10px;
+            padding: 15px;
+        }
+        .title {
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
 	</style>
 </head>
 <body>
 
-<button onclick="toastr.log('gray message')">Log</button>
-<button onclick="toastr.success('green message')">Success</button>
-<button onclick="toastr.error('red message')">Error</button>
-<button onclick="toastr.warning('orange message')">Warning</button>
-<button onclick="toastr.info('blue message')">Info</button>
+<div class='section'>
+    <div class='title'>0.x.x API</div>
+    <button onclick="toastr.log('gray message')">Log</button>
+    <button onclick="toastr.success('green message')">Success</button>
+    <button onclick="toastr.error('red message')">Error</button>
+    <button onclick="toastr.warning('orange message')">Warning</button>
+    <button onclick="toastr.info('blue message')">Info</button>
 
-<button onclick="toastr.log('5 seconds', 5000)">5 seconds</button>
-<button onclick="toastr.log('indefinite message', -1)">Indefinite</button>
-<button onclick="toastr.log('jkfha djfha sdkjghfs dhfgkjds ahfjdshgf kdsjgf kdagkdfs')">Long</button>
-<button onclick="toastr.clear()">Clear All</button>
+    <button onclick="toastr.log('5 seconds', 5000)">5 seconds</button>
+    <button onclick="toastr.log('indefinite message', -1)">Indefinite</button>
+    <button onclick="toastr.log('jkfha djfha sdkjghfs dhfgkjds ahfjdshgf kdsjgf kdagkdfs')">Long</button>
+</div>
 
-<script src='toast.min.js'></script>
+<div class='section'>
+    <div class='title'>1.x.x API equivalents</div>
+    <button onclick="toastr.log({ message: 'gray message' })">Log</button>
+    <button onclick="toastr.success({ message: 'green message' })">Success</button>
+    <button onclick="toastr.error({ message: 'red message' })">Error</button>
+    <button onclick="toastr.warning({ message: 'orange message' })">Warning</button>
+    <button onclick="toastr.info({ message: 'blue message' })">Info</button>
+    
+    <button onclick="toastr.log({ message: '5 seconds', timeout: 5000 })">5 seconds</button>
+    <button onclick="toastr.log({ message: 'indefinite message', timeout: -1 })">Indefinite</button>
+    <button onclick="toastr.log({ msg: 'jkfha djfha sdkjghfs dhfgkjds ahfjdshgf kdsjgf kdagkdfs' })">Long</button>
+</div>
+
+<div class='section'>
+    <div class='title'>1.x.x new features</div>
+    <button onclick="clickableExample()">Clickable</button>
+</div>
+
+<div class='section'>
+    <div class='title'>common functions</div>
+    <button onclick="toastr.clear()">Clear All</button>
+</div>
+
+<script>
+    function clickableExample(){
+        toastr.success({
+            message: 'click me',
+            onclick: function(ev){
+                alert('you clicked it \n\nmessage: ' + ev.message + '\nshown: ' + ev.count);
+            }
+        });
+    }
+</script>
+
+<!--<script src='toast.min.js'></script>-->
 <!--<script src='toast.full.js'></script>-->
 
-<!--
 <link rel="stylesheet" type="text/css" href="toast.css" />
 <script src='toast.js'></script>
--->
 
 </body>
 </html>
