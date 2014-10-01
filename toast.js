@@ -85,6 +85,7 @@
         
         opts = opts || {};
         opts.msg = opts.msg || opts.message;
+        opts.group = !!opts.action ? false : !!toastr.group;
         
         // overwrite message parameter with 
         if (typeof args[0] === 'string') {
@@ -98,8 +99,28 @@
         return opts;
     }
     
-    function getActionDOM(action) {
-        
+    function getActionDOM(action, parent) {
+        // if there are multiple actions, recursively add all of them
+        if (action instanceof Array) {
+            parent = parent || document.createElement('span');
+            arrForEach(action, function(el){
+                parent.appendChild( getActionDOM(el, parent) );
+            });
+            return parent;
+        // if there is already dom, use it
+        } else if (action.dom && isNode(action.dom)) {
+            return action.dom;
+        // create a single action item
+        } else if (action.name && action.onclick) {
+            var span = document.createElement('span'),
+                text = document.createTextNode(action.name);
+            
+            span.onclick = action.onclick;
+            span.appendChild(text);
+            span.className = 't-action';
+            return span;
+        // return an empty text node if the action object is unknown
+        } else { return document.createTextNode(''); }
     }
     
     // toast generator function
@@ -142,14 +163,17 @@
         return function toast(/* msg, timeout, opts */) {
             //create toast element
             var opts = toastOptions(arguments),
-                msg = opts.msg,
+                msg = opts.msg || '',
                 timeout = opts.timeout,
-                prev = (!!toastr.group && tracker[msg]) ? tracker[msg] : new Instance(msg),
+                prev = (opts.group && tracker[msg]) ? tracker[msg] : new Instance(msg),
                 div = prev.dom,
                 text = (prev && ++prev.count > 1) ? msg + ' (x' + prev.count + ')' : msg;
             
             //set the textNode value
             prev.textNode.nodeValue = text;
+            
+            //add the action if available
+            (opts.action && typeof opts.action === 'object') && div.appendChild( getActionDOM(opts.action) );
             
             //add remove options (unless indefinite requested)
 			(timeout !== -1) && (clearTimeout(prev.autoRemove), prev.autoRemove = setTimeout(function () { 
