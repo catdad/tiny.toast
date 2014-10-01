@@ -32,7 +32,16 @@
         return 'animation' in style || '-webkit-animation' in style;
     })(toastDOM.style /* document.createElement('div').style */);
     
-    // helper
+    // helper -- test if Object is a node
+    function isNode(o){
+        return (
+            typeof Node === "object" ? 
+                o instanceof Node : 
+                o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string"
+        );
+    }
+    
+    // helper -- test if a node is in the DOM
     function isInPage(node) {
         return (node === document.body) ? false : document.body.contains(node);
     }
@@ -75,28 +84,36 @@
         });
         
         opts = opts || {};
+        opts.msg = opts.msg || opts.message;
         
         // overwrite message parameter with 
         if (typeof args[0] === 'string') {
-            opts.message = args[0];   
+            opts.msg = args[0];   
         }
         
         if (typeof args[1] === 'number') {
-            opts.timeout === args[1];   
+            opts.timeout = args[1];   
         }
         
         return opts;
     }
     
+    function getActionDOM(action) {
+        
+    }
+    
     // toast generator function
     function toaster(type) {
+        //an object to track multiple messages
+        var tracker = {};
+        
         //keep track of toast DOMs
         var Instance = function(msg){
             var that = this;
             
             that.count = 0;
             that.dom = document.createElement('div');
-            //that.textNode = undefined;
+            that.textNode = document.createTextNode('');
             that.autoRemove = undefined;
             that.remove = function(){
                 clearTimeout(that.autoRemove);
@@ -104,6 +121,9 @@
                 
                 remove(that.dom);
             };
+            
+            //add text node to div
+            that.dom.appendChild(that.textNode);
             
             //add remove function directly to dom element
             that.dom.removeToast = that.remove;
@@ -118,18 +138,18 @@
             !!toastr.group && (tracker[msg] = that);
         };
         
-        //an array to track multiple messages
-        var tracker = [];
-        
         //generate a toast function
-        return function toast(msg, timeout) {
+        return function toast(/* msg, timeout, opts */) {
             //create toast element
-            var prev = (!!toastr.group && tracker[msg]) ? tracker[msg] : new Instance(msg),
+            var opts = toastOptions(arguments),
+                msg = opts.msg,
+                timeout = opts.timeout,
+                prev = (!!toastr.group && tracker[msg]) ? tracker[msg] : new Instance(msg),
                 div = prev.dom,
-                text = (prev && ++prev.count > 1) ? msg + ' (x' + prev.count + ')' : msg,
-                textNode = document.createTextNode(text);
+                text = (prev && ++prev.count > 1) ? msg + ' (x' + prev.count + ')' : msg;
             
-            div.firstChild ? div.replaceChild(textNode, div.firstChild) : div.appendChild(textNode);
+            //set the textNode value
+            prev.textNode.nodeValue = text;
             
             //add remove options (unless indefinite requested)
 			(timeout !== -1) && (clearTimeout(prev.autoRemove), prev.autoRemove = setTimeout(function () { 
@@ -138,11 +158,12 @@
             
             //create function to remove on click
             div.onclick = function () { 
+                opts.onclick && (typeof opts.onclick === 'function') && opts.onclick({ message: msg, count: prev.count });
                 prev.remove();
             };
 			
             //return a remove reference
-			return div.onclick;
+			return prev.remove;
         };
     }
 	
