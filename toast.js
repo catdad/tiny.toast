@@ -35,9 +35,10 @@
     // helper -- test if Object is a node
     function isNode(o){
         return (
+            !o ? false :
             typeof Node === "object" ? 
-                o instanceof Node : 
-                o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string"
+            o instanceof Node : 
+            o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string"
         );
     }
     
@@ -85,7 +86,7 @@
         
         opts = opts || {};
         opts.msg = opts.msg || opts.message;
-        opts.group = !!opts.action ? false : !!toastr.group;
+        opts.group = !!opts.action ? false : opts.group !== undefined? !!opts.group : !!toastr.group;
         
         // overwrite message parameter with 
         if (typeof args[0] === 'string') {
@@ -164,7 +165,9 @@
             //create toast element
             var opts = toastOptions(arguments),
                 msg = opts.msg || '',
-                timeout = opts.timeout,
+                dismiss = opts.dismissible,
+                onclick = (typeof opts.onclick === 'function') ? opts.onclick : false,
+                timeout = (dismiss === false) ? -1 : opts.timeout,
                 prev = (opts.group && tracker[msg]) ? tracker[msg] : new Instance(msg),
                 div = prev.dom,
                 text = (prev && ++prev.count > 1) ? msg + ' (x' + prev.count + ')' : msg;
@@ -180,10 +183,12 @@
                 prev.remove();
             }, (+timeout || +toastr.timeout || 5000)));
             
+            div.className += (dismiss !== false || opts.onclick) ? ' t-click' : ''; 
+            
             //create function to remove on click
             div.onclick = function () { 
-                opts.onclick && (typeof opts.onclick === 'function') && opts.onclick({ message: msg, count: prev.count });
-                prev.remove();
+                opts.onclick && opts.onclick({ message: msg, count: prev.count });
+                (dismiss !== false) && prev.remove();
             };
 			
             //return a remove reference
@@ -204,6 +209,7 @@
         group: true,
 		clear: clearAll,
         log: toaster('t-gray'),
+        logw: toaster('t-white'),
         error: toaster('t-red'),
         info: toaster('t-blue'),
         success: toaster('t-green'),

@@ -72,10 +72,14 @@
 
 <div class='section'>
     <div class='title'>1.x.x new features</div>
+    <button onclick="toastr.logw('white message')">New white color</button>
+    
     <button onclick="clickableExample()">Clickable</button>
     <button onclick="textAction()">Single action</button>
     <button onclick="textActions()">Multiple actions</button>
+    <button onclick="requiredAction()">Required action</button>
     <button onclick="customAction()">Custom action</button>
+    <button onclick="nonDismissible()">Non-dismissible</button>
 </div>
 
 <div class='section'>
@@ -94,26 +98,38 @@
     }
     
     function textAction(){
-        toastr.success({
+        toastr.error({
             message: 'Something happened...',
             action: {
                 name: 'aknowlege',
-                onclick: function(){ alert('aknowledged'); }
+                onclick: function(){ toastr.log('aknowledged'); }
             },
             timeout: -1
         });
     }
     
     function textActions(){
-        toastr.warning({
+        var answered = false;
+        
+        toastr.info({
             message: 'Do you want to?',
             action: [{
                 name: 'yes',
-                onclick: function(){ alert('you said yes'); }
+                onclick: function(){ 
+                    answered = true;
+                    toastr.success('you said yes :)');
+                }
             },{
                 name: 'no',
-                onclick: function(){ alert('you said no'); }
+                onclick: function(){ 
+                    answered = true; 
+                    toastr.error('you said no :('); 
+                }
             }],
+            onclick: function(){
+                // will execute even if the toast is dismissed
+                !answered && toastr.warning("Why do you hate me?");
+            },
             timeout: -1
         });
     }
@@ -129,6 +145,42 @@
             action: { dom: o }, 
             timeout: -1 
         });
+    }
+    
+    function nonDismissible(){
+        var dismiss = toastr.warning({
+            // these two properties are needed
+            message: "You can't touch me.",
+            dismissible: false,
+            // these are extras, just for show
+            onclick: function(){
+                toastr.success({
+                    message: "That won't work. Click me instead!",
+                    // this get's rid of that first one
+                    onclick: dismiss
+                });
+            }
+        });
+    }
+    
+    function requiredAction(){
+        var dismiss = toastr.info({
+            message: 'You have to answer me.',
+            dismissible: false,
+            action: [{
+                name: 'yes',
+                onclick: function(){ 
+                    dismiss();
+                    toastr.success('you said yes :)');
+                }
+            },{
+                name: 'no',
+                onclick: function(){
+                    dismiss();
+                    toastr.error('you said no :('); 
+                }
+            }]
+        });   
     }
 </script>
 

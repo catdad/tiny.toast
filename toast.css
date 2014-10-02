@@ -8,7 +8,7 @@
 }
 
 /* execute only on modern browsers */
-@media all and (min-width: 0) {
+@media (min-width: 0) {
     .t-wrap {
         /* resets */
         width: auto;
@@ -28,7 +28,7 @@
     }
 }
 
-.t-wrap .t-toast {
+.t-toast {
     width: 16em;
     margin: .6em auto;
     padding: .5em .3em;
@@ -36,7 +36,7 @@
     box-shadow: 0px 4px 0px -1px rgba(0,0,0,.2);
     
     color: #eee;
-    cursor: pointer;
+    cursor: default;
     overflow-y: hidden;
     
     /* use a layer for each toasts */
@@ -71,6 +71,13 @@
     background: #D89B55;
     background: rgba(216, 133, 73, .9);
 }
+.t-toast.t-white {
+    background: #FAFAFA;
+    background: rgba(255, 255, 255, .9);
+    color: #777;
+}
+
+.t-click, .t-action { cursor: pointer; }
 
 .t-action {
     font-weight: bold;
@@ -103,7 +110,7 @@
 }
 
 @media screen and (max-width: 17em) {
-    .t-wrap .t-toast {
+    .t-toast {
         width: 90%;
     }
 }
