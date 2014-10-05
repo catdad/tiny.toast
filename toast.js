@@ -204,12 +204,13 @@
         });
 	}
 
-    var toastr = window.toastr = {
+    // toastr is legacy -- should I remove it?
+    var toastr = window.toastr = window.toast = {
         timeout: 4000,
         group: true,
 		clear: clearAll,
         log: toaster('t-gray'),
-        logw: toaster('t-white'),
+        alert: toaster('t-white'),
         error: toaster('t-red'),
         info: toaster('t-blue'),
         success: toaster('t-green'),

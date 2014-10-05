@@ -1,4 +1,4 @@
-/*! tiny.toast 2014-10-01 */
+/*! tiny.toast 2014-10-02 */
 /* jshint browser: true, -W030 */
 
 !function (window, document) {
@@ -166,7 +166,7 @@
             //create toast element
             var opts = toastOptions(arguments),
                 msg = opts.msg || '',
-                dismiss = opts.dismissable,
+                dismiss = opts.dismissible,
                 onclick = (typeof opts.onclick === 'function') ? opts.onclick : false,
                 timeout = (dismiss === false) ? -1 : opts.timeout,
                 prev = (opts.group && tracker[msg]) ? tracker[msg] : new Instance(msg),
@@ -205,12 +205,13 @@
         });
 	}
 
-    var toastr = window.toastr = {
+    // toastr is legacy -- should I remove it?
+    var toastr = window.toastr = window.toast = {
         timeout: 4000,
         group: true,
 		clear: clearAll,
         log: toaster('t-gray'),
-        logw: toaster('t-white'),
+        alert: toaster('t-white'),
         error: toaster('t-red'),
         info: toaster('t-blue'),
         success: toaster('t-green'),
