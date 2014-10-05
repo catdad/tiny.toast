@@ -21,11 +21,10 @@
             width: 90%;
             max-width: 54em;
             margin: 0 auto;
-            background: #f9f9f9;
+            background: #f2f2f2;
             color: #555;
             text-align: center;
         }
-        
         
         h1 { 
             font-size: 4em; 
@@ -50,13 +49,12 @@
         .center {
             text-align: center;
         }
-        .code {
+        
+        pre {
             text-align: left;
             box-sizing: border-box;
             border-radius: 4px;
-            max-width: 400px;
-        }
-        pre {
+        
             white-space: pre-wrap;
             word-wrap: break-word;
             margin: 0;
@@ -64,7 +62,13 @@
             font-family: Menlo, 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Consolas, monospace;
         }
         
-        button {
+        a {
+            color: #F26F83;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        button, a.button {
             font-size: 1em;
             font-weight: bold;
             margin: 5px;
@@ -82,16 +86,20 @@
             background: #F26F83;
         }
         
-        button:hover{
+        a.button {
+            font-size: 1.5em;
+        }
+        
+        button:hover, a.button:hover {
             background: #DA6476;
             border: none;
         }
         
-        button:active {
+        button:active, a.button:active {
             background: #C25969;
         }
         
-        button:focus {
+        button:focus, a.button:focus {
             outline: 0;
         }
         
@@ -145,6 +153,7 @@
         .group .code {
             top: 2em;
             position: relative;
+            max-width: 450px;
         }
         
         @media (max-width: 44em) {
@@ -224,9 +233,7 @@
             <button onclick="dismissAction()">Try me</button>
         </div>
         <div id="dismissAction" class="long code">
-            <pre><code>
-                
-            </code></pre>
+            <pre></pre>
         </div>
         <div class="clear"></div>
     </div>
@@ -237,9 +244,7 @@
             <button onclick="multipleActions()">Try me</button>
         </div>
         <div id="multipleActions" class="long code">
-            <pre><code>
-                
-            </code></pre>
+            <pre></pre>
         </div>
         <div class="clear"></div>
     </div>
@@ -250,7 +255,7 @@
             <button onclick="requiredActions()">Try me</button>
         </div>
         <div id="requiredActions" class="long code">
-            <pre><code></code></pre>
+            <pre></pre>
         </div>
         <div class="clear"></div>
     </div>
@@ -261,9 +266,7 @@
             <button onclick="nonDismissibleMessage()">Try me</button>
         </div>
         <div id="nonDismissibleMessage" class="long code">
-            <pre><code>
-                
-            </code></pre>
+            <pre></pre>
         </div>
         <div class="clear"></div>
     </div>
@@ -274,9 +277,7 @@
             <button onclick="customContent()">Try me</button>
         </div>
         <div id="customContent" class="long code">
-            <pre><code>
-                
-            </code></pre>
+            <pre></pre>
         </div>
         <div class="clear"></div>
     </div>
@@ -284,11 +285,26 @@
 
     
     <h3>Download and use</h3>
-    <div class="code">CDN</div>
-    <div class="code">Download</div>
+    <div class="text center">Put this code in your page and start toasting:</div>
+    <div class="code">
+        <pre class="prettyprint lang-html pln">&lt;script src="http://catdad.github.io/tiny.cdn/lib/toast/0.0.4/toast.min.js"&gt;&lt;/script&gt;</pre>
+    </div>
+    <div class="text center">Or download the latest version:</div>
+    <a href="#" class="button">Download</a>
     
     <h3>Contribute</h3>
-    <div class="text">GitHub</div>
+    <div class="text">
+        Tiny Toast was created by 
+        <a href="http://www.kirilv.com">Kiril Vatev</a>, 
+        and the source code is available on 
+        <a href="http://www.github.com/catdad/tiny.toast">GitHub</a>. 
+        Feel free to fork it and contribute.
+    </div>
+    
+    <div class="text">
+        All code on this page, unless otherwise stated, is licensed under the 
+        <a href="http://opensource.org/licenses/MIT">MIT License</a>.
+    </div>
     
     <script>
         function hasSVG(){

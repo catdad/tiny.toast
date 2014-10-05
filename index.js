@@ -115,6 +115,5 @@ _.forEach(examples, function(func, name){
     // remove exactly one code indentation
     funcBody = funcBody.replace(/\n {4}/g, '');
 
-    el.innerHTML = '<pre>' + prettyPrintOne(funcBody.trim(), 'javascript') + '</pre>';
-    el.className += ' prettyprint';
+    el.innerHTML = '<pre class="prettyprint">' + prettyPrintOne(funcBody.trim(), 'javascript') + '</pre>';
 });
