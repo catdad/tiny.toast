@@ -2,7 +2,7 @@
 
 This is the first of my micro-libraries. It will show tiny messages at the bottom of a web page. That is it.
 
-## Usage
+## Simple messages
 
 Include the script in your web page (it's hosted online!):
 
@@ -10,40 +10,73 @@ Include the script in your web page (it's hosted online!):
 
 Then, start sending tiny toast notifications:
 
-	toastr.success('I am a green notification.');
-	toastr.error('I am a red notification.');
-	toastr.warning('I am a yellow notification.');
-	toastr.info('I am a blue notification.');
-	toastr.log('I am a gray notification.');
+	toast.success('I am a green notification.');
+	toast.error('I am a red notification.');
+	toast.warning('I am a yellow notification.');
+	toast.info('I am a blue notification.');
+	toast.log('I am a gray notification.');
+    toast.alert('I am a white message.');
 	
 It's that easy. They will disappear after a default amount of time. To customize this, add a millisecond timeout to the call.
 
-	toastr.log('I will disappear in 5 seconds.', 5000);
+	toast.log('I will disappear in 5 seconds.', 5000);
 	
 Or you can change the default timeout.
 
-	toastr.timeout = 5000;
+	toast.timeout = 5000;
 	
 To create an indefinite notification, use `-1` as the timeout:
 
-	toastr.info('Indefinite message', -1);
-	
+	toast.info('Indefinite message', -1);
+
+## Advanced messages
+
+All optiosn can be supplied in an options object, as such:
+
+    toast.success({
+        message: 'You succeeded.',
+        timeout: 5000
+    });
+    
+This options object has the following properties, all of which are optional:
+
+* `message` {string} - The text to display.
+
+* `timeout` {number} - The amount of time, in milliseconds, to display the message. The default value is the value of `toast.timeout`. Setting the timeout to `-1` causes the message to display until it is dismissed.
+
+* `dismissible` {boolean} - Whether clicking on the message will automatically dismiss it. The default for this value is `true`. When set to `false`, the message will not automatically dismiss, and it will not dismissed when clicked on. You will need to call the function returned by `toast.[name]` (when the message is created), or the clear all function `toast.clearAll`.
+
+* `oclick` {function} - A function to execute if the user clicks on the notification to dismiss it (or clicks on a non-dismissible notification).
+
+* `action` {Object | Array.&lt;Object&gt;} - An object or array of objects. This will display clickable options that the user can use to interact with the notification.
+  * `action.name` {string} - The text that is displayed as the clickable action.
+  * `action.onclick` {function} - The function to execute when the user selects this action.
+  * `action.dom` {HTMLElement} - A fully-formed DOM element to use as the action. This will be inserted into the notification as-is.
+
+## Clearing and grouping messages
+
 To clear any notification, you can simply click on the notification. However, creating a toast also returns a function to clear it, as such:
 
-	var clearFn = toastr.info('Indefinite message', -1);
+	var clearFn = toast.info('Indefinite message', -1);
 	
 	//use this to clear it
 	clearFn();
 	
 To clear all notifications:
 
-	toastr.clear();
+	toast.clear();
     
-You can also group repeated notifications together by changing this global property:
+By default, simple messages will group. This is the equivalent to this:
 
-    toastr.group = true;
+    toast.group = true;
     
 Toasts now display as `message (x2)`, keeping track of the amount of times a message displays before being cleared. The timeout is reset when a second instance of the message is sent, and the count clears when the notification is dismissed.
+
+To disable this, use the following code:
+
+    toast.group = false;
+    
+This will cause each message to produce its own display element. Advanced messages with actions will not group, regardless of this setting.
 
 ## About Tiny tools
 
