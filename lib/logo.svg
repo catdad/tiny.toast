@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 74 20" xml:space="preserve">
+    <style>
+        text {
+            font-family: Lato, sans-serif;
+        }
+        #tiny { fill: #555; }
+        #toast { fill: #F26F83; }
+    </style>
+    <text x="0" y="15" id="tiny">Tiny </text><text x="30" y="15" id="toast">Toast</text>
+</svg>

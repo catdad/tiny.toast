@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiny Toast</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    
+    <style>
+        html, body,
+        h1, h2, h3, h4 {
+            margin: 0;
+            padding: 0;
+            font-size: 1em;
+            font-family: Lato, sans-serif;
+        }
+        
+        body {
+            width: 90%;
+            max-width: 54em;
+            margin: 0 auto;
+            background: #f9f9f9;
+            color: #555;
+            text-align: center;
+        }
+        
+        
+        h1 { 
+            font-size: 4em; 
+        }
+        h3 {
+            font-size: 1.5em;
+            padding: 55px 0 10px;
+            margin: 20px 0 10px;
+            border-top: 1px solid lightgray;
+            font-variant: small-caps;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
+        .clear { clear: both; float: none !important; }
+        
+        .text {
+            text-align: left;
+            line-height: 1.5em;
+            margin: 1.5em 0;
+        }
+        .center {
+            text-align: center;
+        }
+        .code {
+            text-align: left;
+            box-sizing: border-box;
+            border-radius: 4px;
+            max-width: 400px;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+            padding: 0;
+            font-family: Menlo, 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Consolas, monospace;
+        }
+        
+        button {
+            font-size: 1em;
+            font-weight: bold;
+            margin: 5px;
+            padding: 6px 16px;
+            line-height: 1.5em;
+            vertical-align: middle;
+            border: 0px;
+            color: white;
+            border-radius: 2px;
+            cursor: pointer;
+            
+            font-family: inherit;
+            letter-spacing: .05em;
+            
+            background: #F26F83;
+        }
+        
+        button:hover{
+            background: #DA6476;
+            border: none;
+        }
+        
+        button:active {
+            background: #C25969;
+        }
+        
+        button:focus {
+            outline: 0;
+        }
+        
+        #splash {
+            width: 50%;
+            height: 0;
+            padding-bottom: 50%;
+            position: relative;
+        }
+        #splash:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            content: url('logo.svg');
+        }
+        
+        svg, #svg-fallback img {
+            display: block;
+            text-align: center;
+            width: 65%;
+            max-width: 600px;
+            margin: 15px auto 5px;
+        }
+        
+        .half {
+            float: left;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        .half.left{ text-align: right; }
+        .half.right{ text-align: left; }
+        
+        .group { 
+            clear: both;
+            padding: 20px 0 2em;
+        }
+        .group > div {
+            float: left;
+            width: 50%;
+            display: inline-block;
+        }
+        
+        .group .short {
+            width: 40%;
+        }
+        .group .long {
+            width: 60%;
+        }
+        .group .code {
+            top: 2em;
+            position: relative;
+        }
+        
+        @media (max-width: 44em) {
+            .group > div, .group .long, .group .short { 
+                float: none;
+                width: 100%;
+            }
+            
+            .code { max-width: none; }
+            .clear { margin-bottom: 20px; }
+        }
+    </style>
+    
+    <script src="toast.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    
+<!--    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css" />-->
+	<link rel="stylesheet" href="lib/tomorrow%20night.css" />
+	
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+	
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 74 20" xml:space="preserve">
+        <style>
+            text {
+                font-family: Lato, sans-serif;
+                font-weight: bold;
+            }
+            #tiny { fill: #555; }
+            #toast { fill: #F26F83; }
+        </style>
+        <text x="0" y="15" id="tiny">Tiny </text><text x="34" y="15" id="toast">Toast</text>
+    </svg>
+    <div id="svg-fallback"></div>
+        
+    <h4>Tiny code for tiny messages</h3>
+    
+    <h3>So what does it do?</h3>
+    <button onclick="toast.alert('It\'s a message!')">Show Me</button>
+    
+    <h3>Examples</h3>
+    <div class="text center">Something happen in your app? Let them know.</div>
+    <div class="">
+        <div class="left half"><button onclick="toast.success('Good job! :)')">Success</button></div>
+        <div class="right half"><button onclick="toast.error('Bad job. :(')">Error</button></div>
+    </div>
+    <div class="clear"></div>
+    
+    <div class="text center">What else?</div>
+
+    <div class="group">
+        <div class="short">
+            <div>Basic messages</div>
+            <button onclick="basicMessage()">Try me</button>
+        </div>
+        <div id="basicMessage" class="long code">
+            <pre><code></code></pre>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="group">
+        <div class="short">
+            <div>Sticky messages</div>
+            <button onclick="stickyMessage()">Try me</button>
+        </div>
+        <div id="stickyMessage" class="long code">
+            <pre><code></code></pre>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="group">
+        <div class="short">
+            <div>Dismiss actions</div>
+            <button onclick="dismissAction()">Try me</button>
+        </div>
+        <div id="dismissAction" class="long code">
+            <pre><code>
+                
+            </code></pre>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="group">
+        <div class="short">
+            <div>Multiple actions</div>
+            <button onclick="multipleActions()">Try me</button>
+        </div>
+        <div id="multipleActions" class="long code">
+            <pre><code>
+                
+            </code></pre>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="group">
+        <div class="short">
+            <div>Required actions</div>
+            <button onclick="requiredActions()">Try me</button>
+        </div>
+        <div id="requiredActions" class="long code">
+            <pre><code></code></pre>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="group">
+        <div class="short">
+            <div>Non-dismissible messages</div>
+            <button onclick="nonDismissibleMessage()">Try me</button>
+        </div>
+        <div id="nonDismissibleMessage" class="long code">
+            <pre><code>
+                
+            </code></pre>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="group">
+        <div class="short">
+            <div>Custom content</div>
+            <button onclick="customContent()">Try me</button>
+        </div>
+        <div id="customContent" class="long code">
+            <pre><code>
+                
+            </code></pre>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+
+    
+    <h3>Download and use</h3>
+    <div class="code">CDN</div>
+    <div class="code">Download</div>
+    
+    <h3>Contribute</h3>
+    <div class="text">GitHub</div>
+    
+    <script>
+        function hasSVG(){
+            return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
+        }
+        
+        if (!hasSVG()){
+            var fallback = document.getElementById('svg-fallback');
+            fallback.innerHTML = '<img src="lib/logo.png" />';
+        }
+    </script>
+    <script src="index.js"></script>
+</body>
+</html>
