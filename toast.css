@@ -21,8 +21,10 @@
          * does not affect content underneath
          */
         left: 50%;
-        transform: translate(-50%, 0);
-        transform: translate3d(-50%, 0, 0);
+        -webkit-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+                transform: translate(-50%, 0);
+                transform: translate3d(-50%, 0, 0);
         
         transform-style: preserve-3d;
     }
@@ -33,7 +35,7 @@
     margin: .6em auto;
     padding: .5em .3em;
     border-radius: 2em;
-    box-shadow: 0px 4px 0px -1px rgba(0,0,0,.2);
+    box-shadow: 0 4px 0 -1px rgba(0,0,0,.2);
     
     color: #eee;
     cursor: default;
