@@ -37,9 +37,9 @@
     function isNode(o){
         return (
             !o ? false :
-            typeof Node === "object" ? 
+            typeof Node === 'object' ? 
             o instanceof Node : 
-            o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string"
+            o && typeof o === 'object' && typeof o.nodeType === 'number' && typeof o.nodeName === 'string'
         );
     }
     
@@ -184,11 +184,11 @@
                 prev.remove();
             }, (+timeout || +toastr.timeout || 5000)));
             
-            div.className += (dismiss !== false || opts.onclick) ? ' t-click' : ''; 
+            div.className += (dismiss !== false || onclick) ? ' t-click' : ''; 
             
             //create function to remove on click
             div.onclick = function () { 
-                opts.onclick && opts.onclick({ message: msg, count: prev.count });
+                onclick && onclick({ message: msg, count: prev.count });
                 (dismiss !== false) && prev.remove();
             };
 			
