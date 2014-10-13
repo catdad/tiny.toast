@@ -46,7 +46,9 @@ This options object has the following properties, all of which are optional:
 
 * `dismissible` {boolean} - Whether clicking on the message will automatically dismiss it. The default for this value is `true`. When set to `false`, the message will not automatically dismiss, and it will not dismissed when clicked on. You will need to call the function returned by `toast.[name]` (when the message is created), or the clear all function `toast.clearAll`.
 
-* `oclick` {function} - A function to execute if the user clicks on the notification to dismiss it (or clicks on a non-dismissible notification).
+* `onclick` {function} - A function to execute if the user clicks on the notification to dismiss it (or clicks on a non-dismissible notification). This function will receive the following object as a parameter:
+  * `message` {string} - The message that was displayed on the notification.
+  * `count` {number} - The amount of messages thta were grouped together. If grouping is enabled, clickable messages will group together, and only fire the last function when clicked on. This value will represent the amout of messages that were grouped together before the notification was dismissed.
 
 * `action` {Object | Array.&lt;Object&gt;} - An object or array of objects. This will display clickable options that the user can use to interact with the notification.
   * `action.name` {string} - The text that is displayed as the clickable action.
