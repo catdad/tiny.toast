@@ -1,4 +1,4 @@
-/*! tiny.toast 2014-10-12 */
+/*! tiny.toast 2014-11-04 */
 /* jshint browser: true, -W030 */
 
 !function (window, document) {
