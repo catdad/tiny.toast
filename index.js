@@ -77,21 +77,21 @@ function customContent() {
         text = document.createElement('span'),
         textNode = document.createTextNode('Have some toast.'),
         img = document.createElement('img');
-    
+    // line
     img.src = 'lib/icon_4140.png';
-    
+    // line
     img.style.width = img.style.height = '2em';
     img.style.position = 'absolute';
     img.style.right = '1em';
-    
+    // line
     text.style.boxSizing = 'border-box';
     text.style.paddingRight = '2em';
     text.style.lineHeight = '2em';
-    
+    // line
     text.appendChild(textNode);
     root.appendChild(text);
     root.appendChild(img);
-    
+    // line
     toast.alert({
         action: { dom: root }
     });
@@ -107,6 +107,9 @@ var examples = {
     customContent: customContent
 };
 
+// try using CodeMirror
+// boxes came out looking terrible, themes did not take
+// I don't feel like figuring this one out again
 //var mirrors = _.map(examples, function(func, name){
 //    var el = document.getElementById(name),
 //        funcString = func.toString(),
@@ -123,6 +126,8 @@ var examples = {
 //    });
 //});
 
+// try using ace editor (automatic beautification?)
+// needs a defined height on the parent div
 //var editors = _.map(examples, function(func, name){
 //    var el = document.getElementById(name),
 //        funcString = func.toString(),
@@ -152,14 +157,18 @@ _.forEach(examples, function(func, name){
         funcString = func.toString(),
         funcBody = funcString.substring(funcString.indexOf("{") + 1, funcString.lastIndexOf("}"));
 
+    // remove new lines -- this is how the code will be on GitHub
+    funcBody = funcBody.replace(/\n|\r/g, '');
     
-    funcBody = funcBody.replace(/\n|\r/g, '').replace(/\s{2,}/g, function(val){ return '\n' + val; });
+    funcBody = funcBody
+        // 2 or more spaces is an indent, so this needs to be on the next line
+        .replace(/\s{2,}/g, function(val){ return '\n' + val; })
+        // replace "// line" tokens
+        .replace(/\/\/ line/g, '')
+        // remove exactly one code indentation
+        .replace(/\n {4}/g, '\n');
     
     console.log(funcBody);
-    
-    // remove exactly one code indentation
-    funcBody = funcBody.replace(/\n {4}/g, '\n');
-    
     
     el.innerHTML = '<pre class="prettyprint">' + prettyPrintOne(funcBody.trim(), 'javascript') + '</pre>';
 });
