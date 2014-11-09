@@ -1,5 +1,5 @@
 /* jshint browser: true, devel: true */
-/* global toast, _, prettyPrintOne */
+/* global toast, _, prettyPrintOne, CodeMirror, ace */
 
 function basicMessage() {
     toast.alert("Why, hello there.");
@@ -107,13 +107,59 @@ var examples = {
     customContent: customContent
 };
 
+//var mirrors = _.map(examples, function(func, name){
+//    var el = document.getElementById(name),
+//        funcString = func.toString(),
+//        funcBody = funcString.substring(funcString.indexOf("{") + 1, funcString.lastIndexOf("}"));
+//
+//    while(el.firstChild) {
+//        el.removeChild(el.firstChild);
+//    }
+//
+//    return CodeMirror(el, {
+//        value: funcBody,
+//        mode: "javascript",
+//        readOnly: true
+//    });
+//});
+
+//var editors = _.map(examples, function(func, name){
+//    var el = document.getElementById(name),
+//        funcString = func.toString(),
+//        funcBody = funcString.substring(funcString.indexOf("{") + 1, funcString.lastIndexOf("}"));
+//
+//    while(el.firstChild) {
+//        el.removeChild(el.firstChild);
+//    }
+//    
+//    var text = document.createTextNode(funcBody);
+//    el.appendChild(text);
+//    
+//    var editor = ace.edit(name);
+//    editor.setTheme("ace/theme/monokai");
+//    editor.getSession().setMode("ace/mode/javascript");
+//    editor.setReadOnly(true);
+//    //editor.setValue(funcBody);
+//    
+//    var lines = editor.session.getLength();
+//    console.log(name, lines);
+//    
+//    return editor;
+//});
+
 _.forEach(examples, function(func, name){
     var el = document.getElementById(name),
         funcString = func.toString(),
         funcBody = funcString.substring(funcString.indexOf("{") + 1, funcString.lastIndexOf("}"));
 
+    
+    funcBody = funcBody.replace(/\n|\r/g, '').replace(/\s{2,}/g, function(val){ return '\n' + val; });
+    
+    console.log(funcBody);
+    
     // remove exactly one code indentation
-    funcBody = funcBody.replace(/\n {4}/g, '');
-
+    funcBody = funcBody.replace(/\n {4}/g, '\n');
+    
+    
     el.innerHTML = '<pre class="prettyprint">' + prettyPrintOne(funcBody.trim(), 'javascript') + '</pre>';
 });
