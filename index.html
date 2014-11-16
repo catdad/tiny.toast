@@ -206,16 +206,20 @@
             .clear { margin-bottom: 20px; }
             
             #forkRibbon {
+                position: relative; 
+                display: block;
                 left: 0;
-                transform: translate(0,0) rotate(0);
                 width: auto;
                 border-top: none;
                 border-left: none;
                 border-right: none;
-                position: relative; 
-                display: block;
                 margin-bottom: 25px;
                 text-align: center;
+            
+                -webkit-transform: translate(0,0) rotate(0);
+                   -moz-transform: translate(0,0) rotate(0);
+                    -ms-transform: translate(0,0) rotate(0);
+                        transform: translate(0,0) rotate(0);
             }
         }
     </style>
