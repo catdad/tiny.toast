@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <meta name="theme-color" content="#1d1f21">
     
     <title>Tiny Toast</title>
     
@@ -19,11 +20,15 @@
         }
         
         body {
+            width: 100%;
+            background: #f2f2f2;
+            color: #1d1f21;
+        }
+        
+        .wrapper {
             width: 90%;
             max-width: 54em;
             margin: 0 auto;
-            background: #f2f2f2;
-            color: #555;
             text-align: center;
         }
         
@@ -162,7 +167,36 @@
             text-align: left;
         }
         
+        #forkRibbon {
+            position: fixed;
+            padding: 5px 45px;
+            width: 128px;
+            top: 0;
+            right: 0;
+            
+            background-color: #f26f83;
+            color: #ffffff;
+            font-size: 13px;
+            font-family: sans-serif;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px dotted #ffffff;
+            
+            -webkit-transform: translate(50px,50px) rotate(45deg);
+               -moz-transform: translate(50px,50px) rotate(45deg);
+                -ms-transform: translate(50px,50px) rotate(45deg);
+                    transform: translate(50px,50px) rotate(45deg);
+            
+            box-shadow: 0 0 0 3px #f26f83, 0 0 20px -3px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 0 #ffffff, 0 0 5px rgba(0, 0, 0, 0.3);
+            
+            -webkit-backface-visibility: hidden;
+            letter-spacing: .5px;
+            z-index: 100;
+        }
+        
         @media (max-width: 44em) {
+            
             .group > div, .group .long, .group .short { 
                 float: none;
                 width: 100%;
@@ -170,147 +204,163 @@
             
             .code { max-width: none; }
             .clear { margin-bottom: 20px; }
+            
+            #forkRibbon {
+                left: 0;
+                transform: translate(0,0) rotate(0);
+                width: auto;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                position: relative; 
+                display: block;
+                margin-bottom: 25px;
+                text-align: center;
+            }
         }
     </style>
     
     <script src="toast.min.js"></script>
     
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
     <link rel="stylesheet" href="lib/tomorrow%20night.css" />
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
 </head>
 <body>
-    <a href='https://github.com/catdad/tiny.toast' style='position:fixed;padding:5px 45px;width:128px;top:0;right:0;-webkit-transform:translate(50px,50px) rotate(45deg);-moz-transform:translate(50px,50px) rotate(45deg);-ms-transform:translate(50px,50px) rotate(45deg);transform:translate(50px,50px) rotate(45deg);box-shadow:0 0 0 3px #f26f83, 0 0 20px -3px rgba(0, 0, 0, 0.5);text-shadow:0 0 0 #ffffff, 0 0 5px rgba(0, 0, 0, 0.3);background-color:#f26f83;color:#ffffff;font-size:13px;font-family:sans-serif;text-decoration:none;font-weight:bold;border:2px dotted #ffffff;-webkit-backface-visibility:hidden;letter-spacing:.5px;z-index:100;'>Fork me on GitHub</a>   
+    <a href='https://github.com/catdad/tiny.toast' id='forkRibbon'>Fork me on GitHub</a>   
    
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 74 20">
-        <style>
-            text {
-                font-family: Lato, sans-serif;
-                font-weight: bold;
-            }
-            #tiny { fill: #555; }
-            #toast { fill: #F26F83; }
-        </style>
-        <text x="0" y="15" id="tiny">Tiny </text><text x="34" y="15" id="toast">Toast</text>
-    </svg>
-    <div id="svg-fallback"></div>
+    <div class="wrapper">
         
-    <h4>Tiny code for tiny messages</h3>
-    
-    <h3>So what does it do?</h3>
-    <button onclick="toast.alert('It\'s a message!')">Show Me</button>
-    
-    <h3>Examples</h3>
-    <div class="text center">Something happen in your app? Let them know.</div>
-    <div class="">
-        <div class="left half"><button onclick="toast.success('Good job! :)')">Success</button></div>
-        <div class="right half"><button onclick="toast.error('Bad job. :(')">Error</button></div>
-    </div>
-    <div class="clear"></div>
-    
-    <div class="text center">What else?</div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 74 20">
+            <style>
+                text {
+                    font-family: Lato, sans-serif;
+                    font-weight: bold;
+                }
+                #tiny { fill: #1d1f21; }
+                #toast { fill: #F26F83; }
+            </style>
+            <text x="0" y="15" id="tiny">Tiny </text><text x="34" y="15" id="toast">Toast</text>
+        </svg>
+        <div id="svg-fallback"></div>
 
-    <div class="group">
-        <div class="short">
-            <div>Basic messages</div>
-            <button onclick="basicMessage()">Try me</button>
-        </div>
-        <div id="basicMessage" class="long code">
-            <pre><code></code></pre>
-        </div>
-        <div class="clear"></div>
-    </div>
-    
-    <div class="group">
-        <div class="short">
-            <div>Sticky messages</div>
-            <button onclick="stickyMessage()">Try me</button>
-        </div>
-        <div id="stickyMessage" class="long code">
-            <pre><code></code></pre>
+        <h4>Tiny code for tiny messages</h3>
+
+        <h3>So what does it do?</h3>
+        <button onclick="toast.alert('It\'s a message!')">Show Me</button>
+
+        <h3>Examples</h3>
+        <div class="text center">Something happen in your app? Let them know.</div>
+        <div class="">
+            <div class="left half"><button onclick="toast.success('Good job! :)')">Success</button></div>
+            <div class="right half"><button onclick="toast.error('Bad job. :(')">Error</button></div>
         </div>
         <div class="clear"></div>
-    </div>
-    
-    <div class="group">
-        <div class="short">
-            <div>Dismiss actions</div>
-            <button onclick="dismissAction()">Try me</button>
+
+        <div class="text center">What else?</div>
+
+        <div class="group">
+            <div class="short">
+                <div>Basic messages</div>
+                <button onclick="basicMessage()">Try me</button>
+            </div>
+            <div id="basicMessage" class="long code">
+                <pre><code></code></pre>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div id="dismissAction" class="long code">
-            <pre></pre>
+
+        <div class="group">
+            <div class="short">
+                <div>Sticky messages</div>
+                <button onclick="stickyMessage()">Try me</button>
+            </div>
+            <div id="stickyMessage" class="long code">
+                <pre><code></code></pre>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="clear"></div>
-    </div>
-    
-    <div class="group">
-        <div class="short">
-            <div>Multiple actions</div>
-            <button onclick="multipleActions()">Try me</button>
+
+        <div class="group">
+            <div class="short">
+                <div>Dismiss actions</div>
+                <button onclick="dismissAction()">Try me</button>
+            </div>
+            <div id="dismissAction" class="long code">
+                <pre></pre>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div id="multipleActions" class="long code">
-            <pre></pre>
+
+        <div class="group">
+            <div class="short">
+                <div>Multiple actions</div>
+                <button onclick="multipleActions()">Try me</button>
+            </div>
+            <div id="multipleActions" class="long code">
+                <pre></pre>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="clear"></div>
-    </div>
-    
-    <div class="group">
-        <div class="short">
-            <div>Required actions</div>
-            <button onclick="requiredActions()">Try me</button>
+
+        <div class="group">
+            <div class="short">
+                <div>Required actions</div>
+                <button onclick="requiredActions()">Try me</button>
+            </div>
+            <div id="requiredActions" class="long code">
+                <pre></pre>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div id="requiredActions" class="long code">
-            <pre></pre>
+
+        <div class="group">
+            <div class="short">
+                <div>Non-dismissible messages</div>
+                <button onclick="nonDismissibleMessage()">Try me</button>
+            </div>
+            <div id="nonDismissibleMessage" class="long code">
+                <pre></pre>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="clear"></div>
-    </div>
-    
-    <div class="group">
-        <div class="short">
-            <div>Non-dismissible messages</div>
-            <button onclick="nonDismissibleMessage()">Try me</button>
+
+        <div class="group">
+            <div class="short">
+                <div>Custom content</div>
+                <button onclick="customContent()">Try me</button>
+            </div>
+            <div id="customContent" class="long code">
+                <pre></pre>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div id="nonDismissibleMessage" class="long code">
-            <pre></pre>
+
+        <h3>Download and use</h3>
+        <div class="text center">Put this code in your page and start toasting:</div>
+        <div class="code">
+            <pre class="prettyprint lang-html pln">&lt;script src="http://catdad.github.io/tiny.cdn/lib/toast/0.0.4/toast.min.js"&gt;&lt;/script&gt;</pre>
         </div>
-        <div class="clear"></div>
-    </div>
-    
-    <div class="group">
-        <div class="short">
-            <div>Custom content</div>
-            <button onclick="customContent()">Try me</button>
+
+        <div class="text center">Or download the latest version:</div>
+        <a href="#" class="button">Download</a>
+
+        <div class="text center">Read the full documentation:</div>
+        <a href="https://github.com/catdad/tiny.toast" class="button">Documentation</a>
+
+        <h3>Contribute</h3>
+        <div class="text">
+            Tiny Toast was created by 
+            <a href="http://www.kirilv.com">Kiril Vatev</a>, 
+            and the source code is available on 
+            <a href="http://www.github.com/catdad/tiny.toast">GitHub</a>. 
+            Feel free to fork it and contribute.
         </div>
-        <div id="customContent" class="long code">
-            <pre></pre>
+
+        <div class="text">
+            All code on this page, unless otherwise stated, is licensed under the 
+            <a href="http://opensource.org/licenses/MIT">MIT License</a>.
         </div>
-        <div class="clear"></div>
-    </div>
     
-    <h3>Download and use</h3>
-    <div class="text center">Put this code in your page and start toasting:</div>
-    <div class="code">
-        <pre class="prettyprint lang-html pln">&lt;script src="http://catdad.github.io/tiny.cdn/lib/toast/0.0.4/toast.min.js"&gt;&lt;/script&gt;</pre>
-    </div>
-    
-    <div class="text center">Or download the latest version:</div>
-    <a href="#" class="button">Download</a>
-    
-    <div class="text center">Read the full documentation:</div>
-    <a href="https://github.com/catdad/tiny.toast" class="button">Documentation</a>
-    
-    <h3>Contribute</h3>
-    <div class="text">
-        Tiny Toast was created by 
-        <a href="http://www.kirilv.com">Kiril Vatev</a>, 
-        and the source code is available on 
-        <a href="http://www.github.com/catdad/tiny.toast">GitHub</a>. 
-        Feel free to fork it and contribute.
-    </div>
-    
-    <div class="text">
-        All code on this page, unless otherwise stated, is licensed under the 
-        <a href="http://opensource.org/licenses/MIT">MIT License</a>.
     </div>
     
     <script>

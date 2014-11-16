@@ -1,5 +1,5 @@
 /* jshint browser: true, devel: true */
-/* global toast, _, prettyPrintOne, CodeMirror, ace */
+/* global toast, prettyPrintOne, CodeMirror, ace */
 
 function basicMessage() {
     toast.alert("Why, hello there.");
@@ -97,6 +97,39 @@ function customContent() {
     });
 }
 
+// https://gist.github.com/catdad/11239214
+var forEach = function(obj, cb, context){
+    /* jshint -W030 */
+    // check for a native forEach function
+    var native = [].forEach,
+        hasProp = Object.prototype.hasOwnProperty;
+    
+    // if there is a native function, use it
+    if (native && obj.forEach === native) {
+        //don't bother if there is no function
+        cb && obj.forEach(cb, context);
+    }
+    // if the object is array-like
+    else if (obj.length === +obj.length) {
+        // loop though all values
+        for (var i = 0, length = obj.length; i < length; i++) {
+            // call the function with the context and native-like arguments
+            cb && cb.call(context, obj[i], i, obj);
+        }
+    }
+    // it's an object, use the keys
+    else {
+        // loop through all keys
+        for (var name in obj){
+            // call the function with context and native-like arguments
+            if (hasProp.call(obj, name)) {
+                cb && cb.call(context, obj[name], name, obj);
+            }
+        }
+    }
+    /* jshint +W030 */
+};
+
 var examples = {
     basicMessage: basicMessage,
     stickyMessage: stickyMessage,
@@ -152,7 +185,7 @@ var examples = {
 //    return editor;
 //});
 
-_.forEach(examples, function(func, name){
+forEach(examples, function(func, name){
     var el = document.getElementById(name),
         funcString = func.toString(),
         funcBody = funcString.substring(funcString.indexOf("{") + 1, funcString.lastIndexOf("}"));
