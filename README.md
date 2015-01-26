@@ -6,7 +6,7 @@ This is the first of my micro-libraries. It will show tiny messages at the botto
 
 Include the script in your web page (it's hosted online!):
 
-	<script src="http://catdad.github.io/tiny.cdn/lib/toast/0.0.4/toast.min.js"></script>
+	<script src="http://catdad.github.io/tiny.cdn/lib/toast/1.0.0/toast.min.js"></script>
 
 Then, start sending tiny toast notifications:
 
