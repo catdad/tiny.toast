@@ -5,11 +5,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
     <meta name="theme-color" content="#1d1f21">
-    
+
     <title>Tiny Toast</title>
-    
+
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    
+
     <style>
         html, body,
         h1, h2, h3, h4 {
@@ -18,22 +18,22 @@
             font-size: 1em;
             font-family: Lato, sans-serif;
         }
-        
+
         body {
             width: 100%;
             background: #f2f2f2;
             color: #1d1f21;
         }
-        
+
         .wrapper {
             width: 90%;
             max-width: 54em;
             margin: 0 auto;
             text-align: center;
         }
-        
-        h1 { 
-            font-size: 4em; 
+
+        h1 {
+            font-size: 4em;
         }
         h3 {
             font-size: 1.5em;
@@ -47,9 +47,9 @@
         h4 {
             font-size: 1.2em;
         }
-        
+
         .clear { clear: both; float: none !important; }
-        
+
         .text {
             text-align: left;
             line-height: 1.5em;
@@ -58,25 +58,25 @@
         .center {
             text-align: center;
         }
-        
+
         pre {
             text-align: left;
             box-sizing: border-box;
             border-radius: 2px;
-        
+
             white-space: pre-wrap;
             word-wrap: break-word;
             margin: 0;
             padding: 0;
             font-family: Menlo, 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Consolas, monospace;
         }
-        
+
         a {
             color: #F26F83;
             text-decoration: none;
             font-weight: bold;
         }
-        
+
         button, a.button {
             font-size: 1em;
             font-weight: bold;
@@ -88,30 +88,30 @@
             color: white;
             border-radius: 2px;
             cursor: pointer;
-            
+
             font-family: inherit;
             letter-spacing: .05em;
-            
+
             background: #F26F83;
         }
-        
+
         a.button {
             font-size: 1.5em;
         }
-        
+
         button:hover, a.button:hover {
             background: #DA6476;
             border: none;
         }
-        
+
         button:active, a.button:active {
             background: #C25969;
         }
-        
+
         button:focus, a.button:focus {
             outline: 0;
         }
-        
+
         #splash {
             width: 50%;
             height: 0;
@@ -126,7 +126,7 @@
             height: 100%;
             content: url('logo.svg');
         }
-        
+
         svg, #svg-fallback img {
             display: block;
             text-align: center;
@@ -134,7 +134,7 @@
             max-width: 600px;
             margin: 15px auto 5px;
         }
-        
+
         .half {
             float: left;
             width: 50%;
@@ -142,8 +142,8 @@
         }
         .half.left{ text-align: right; }
         .half.right{ text-align: left; }
-        
-        .group { 
+
+        .group {
             clear: both;
             padding: 20px 0 2em;
         }
@@ -152,7 +152,7 @@
             width: 50%;
             display: inline-block;
         }
-        
+
         .group .short {
             width: 40%;
         }
@@ -166,14 +166,14 @@
 /*            height: 200px;*/
             text-align: left;
         }
-        
+
         #forkRibbon {
             position: fixed;
             padding: 5px 45px;
             width: 128px;
             top: 0;
             right: 0;
-            
+
             background-color: #f26f83;
             color: #ffffff;
             font-size: 13px;
@@ -181,32 +181,32 @@
             text-decoration: none;
             font-weight: bold;
             border: 2px dotted #ffffff;
-            
+
             -webkit-transform: translate(50px,50px) rotate(45deg);
                -moz-transform: translate(50px,50px) rotate(45deg);
                 -ms-transform: translate(50px,50px) rotate(45deg);
                     transform: translate(50px,50px) rotate(45deg);
-            
+
             box-shadow: 0 0 0 3px #f26f83, 0 0 20px -3px rgba(0, 0, 0, 0.5);
             text-shadow: 0 0 0 #ffffff, 0 0 5px rgba(0, 0, 0, 0.3);
-            
+
             -webkit-backface-visibility: hidden;
             letter-spacing: .5px;
             z-index: 100;
         }
-        
+
         @media (max-width: 44em) {
-            
-            .group > div, .group .long, .group .short { 
+
+            .group > div, .group .long, .group .short {
                 float: none;
                 width: 100%;
             }
-            
+
             .code { max-width: none; }
             .clear { margin-bottom: 20px; }
-            
+
             #forkRibbon {
-                position: relative; 
+                position: relative;
                 display: block;
                 left: 0;
                 width: auto;
@@ -215,7 +215,7 @@
                 border-right: none;
                 margin-bottom: 25px;
                 text-align: center;
-            
+
                 -webkit-transform: translate(0,0) rotate(0);
                    -moz-transform: translate(0,0) rotate(0);
                     -ms-transform: translate(0,0) rotate(0);
@@ -223,17 +223,17 @@
             }
         }
     </style>
-    
+
     <script src="toast.min.js"></script>
-    
+
     <link rel="stylesheet" href="lib/tomorrow%20night.css" />
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
 </head>
 <body>
-    <a href='https://github.com/catdad/tiny.toast' id='forkRibbon'>Fork me on GitHub</a>   
-   
+    <a href='https://github.com/catdad/tiny.toast' id='forkRibbon'>Fork me on GitHub</a>
+
     <div class="wrapper">
-        
+
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 74 20">
             <style>
                 text {
@@ -353,25 +353,25 @@
 
         <h3>Contribute</h3>
         <div class="text">
-            Tiny Toast was created by 
-            <a href="http://www.kirilv.com">Kiril Vatev</a>, 
-            and the source code is available on 
-            <a href="http://www.github.com/catdad/tiny.toast">GitHub</a>. 
+            Tiny Toast was created by
+            <a href="http://www.kirilv.com">Kiril Vatev</a>,
+            and the source code is available on
+            <a href="http://www.github.com/catdad/tiny.toast">GitHub</a>.
             Feel free to fork it and contribute.
         </div>
 
         <div class="text">
-            All code on this page, unless otherwise stated, is licensed under the 
+            All code on this page, unless otherwise stated, is licensed under the
             <a href="http://opensource.org/licenses/MIT">MIT License</a>.
         </div>
-    
+
     </div>
-    
+
     <script>
         function hasSVG(){
             return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
         }
-        
+
         if (!hasSVG()){
             var fallback = document.getElementById('svg-fallback');
             fallback.innerHTML = '<img src="lib/logo.png" />';
