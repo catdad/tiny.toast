@@ -6,38 +6,50 @@ This is the first of my micro-libraries. It will show tiny messages at the botto
 
 Include the script in your web page (it's hosted online!):
 
-	<script src="http://catdad.github.io/tiny.cdn/lib/toast/1.0.0/toast.min.js"></script>
+```html
+<script src="http://catdad.github.io/tiny.cdn/lib/toast/1.0.0/toast.min.js"></script>
+```
 
 Then, start sending tiny toast notifications:
 
-	toast.success('I am a green notification.');
-	toast.error('I am a red notification.');
-	toast.warning('I am a yellow notification.');
-	toast.info('I am a blue notification.');
-	toast.log('I am a gray notification.');
-    toast.alert('I am a white message.');
-	
+```javascript
+toast.success('I am a green notification.');
+toast.error('I am a red notification.');
+toast.warning('I am a yellow notification.');
+toast.info('I am a blue notification.');
+toast.log('I am a gray notification.');
+toast.alert('I am a white message.');
+```
+
 It's that easy. They will disappear after a default amount of time. To customize this, add a millisecond timeout to the call.
 
-	toast.log('I will disappear in 5 seconds.', 5000);
-	
+```javascript
+toast.log('I will disappear in 5 seconds.', 5000);
+```
+
 Or you can change the default timeout.
 
-	toast.timeout = 5000;
-	
+```javascript
+toast.timeout = 5000;
+```
+
 To create an indefinite notification, use `-1` as the timeout:
 
-	toast.info('Indefinite message', -1);
+```javascript
+toast.info('Indefinite message', -1);
+```
 
 ## Advanced messages
 
 All optiosn can be supplied in an options object, as such:
 
-    toast.success({
-        message: 'You succeeded.',
-        timeout: 5000
-    });
-    
+```javascript
+toast.success({
+    message: 'You succeeded.',
+    timeout: 5000
+});
+```
+
 This options object has the following properties, all of which are optional:
 
 * `message` {string} - The text to display.
@@ -59,25 +71,33 @@ This options object has the following properties, all of which are optional:
 
 To clear any notification, you can simply click on the notification. However, creating a toast also returns a function to clear it, as such:
 
-	var clearFn = toast.info('Indefinite message', -1);
-	
-	//use this to clear it
-	clearFn();
-	
+```javascript
+var clearFn = toast.info('Indefinite message', -1);
+
+//use this to clear it
+clearFn();
+```
+
 To clear all notifications:
 
-	toast.clear();
-    
+```javascript
+toast.clear();
+```
+
 By default, simple messages will group. This is the equivalent to this:
 
-    toast.group = true;
-    
+```javascript
+toast.group = true;
+```
+
 Toasts now display as `message (x2)`, keeping track of the amount of times a message displays before being cleared. The timeout is reset when a second instance of the message is sent, and the count clears when the notification is dismissed.
 
 To disable this, use the following code:
 
-    toast.group = false;
-    
+```javascript
+toast.group = false;
+```
+
 This will cause each message to produce its own display element. Advanced messages with actions will not group, regardless of this setting.
 
 ## About Tiny tools
