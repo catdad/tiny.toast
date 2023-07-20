@@ -25,6 +25,7 @@
 	//check for when the document is ready
 	if (document.addEventListener) document.addEventListener('readystatechange', readyCheck, false);
 	else document.attachEvent('onreadystatechange', readyCheck);
+    readyCheck(); // should also run check without any listeners in case library was loaded later
 
     // check if animations are supported
     // we can reuse a div we already created earlier
